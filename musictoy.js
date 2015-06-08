@@ -35,7 +35,7 @@
 *****************************************************************************/
 
 function initSynth(synthNet, piece)
-{  
+{
     // Bass patch
     var bass = synthNet.addNode(new VAnalog(3));
     bass.name = 'bass';
@@ -64,7 +64,7 @@ function initSynth(synthNet, piece)
 
     bass.cutoff = 0.3;
     bass.resonance = 0;
-   
+
     bass.filterEnv.a = 0;
     bass.filterEnv.d = 0.25;
     bass.filterEnv.s = 0.25;
@@ -94,7 +94,7 @@ function initSynth(synthNet, piece)
 
     lead.cutoff = 0.3;
     lead.resonance = 0;
-   
+
     lead.filterEnv.a = 0;
     lead.filterEnv.d = 0.2;
     lead.filterEnv.s = 0;
@@ -147,12 +147,12 @@ function initSynth(synthNet, piece)
     piece.beatsPerMin = 137;
     piece.beatsPerBar = 4;
     piece.noteVal = 4;
-    
+
     piece.loopTime = piece.beatTime(Sequencer.NUM_BEATS);
 
     var sequencer = new Sequencer(
-        piece, 
-        leadTrack, 
+        piece,
+        leadTrack,
         drumTrack,
         'G4',
         'C4',
@@ -256,8 +256,6 @@ function initSynth(synthNet, piece)
         var xPos = event.offsetX;
         var yPos = event.offsetY;
 
-        console.log('canvas click ' + event.button + '(' + xPos + ', ' + yPos + ')');
-
         sequencer.click(xPos, yPos);
 
         redraw();
@@ -272,13 +270,13 @@ function initSynth(synthNet, piece)
 @class Sequencer interface
 */
 function Sequencer(
-    piece, 
-    leadTrack, 
+    piece,
+    leadTrack,
     drumTrack,
     leadRoot,
     drumRoot,
     leadScale,
-    numOctaves, 
+    numOctaves,
     numDrums
 )
 {
@@ -300,7 +298,7 @@ function Sequencer(
     Piece to render to
     */
     this.piece = piece;
-    
+
     /**
     Lead track
     */
@@ -356,8 +354,8 @@ function Sequencer(
                 {
                     ctx.fillStyle = this.color;
                     ctx.fillRect(
-                        this.x + Sequencer.SQR_OUTER_TRIM, 
-                        this.y + Sequencer.SQR_OUTER_TRIM, 
+                        this.x + Sequencer.SQR_OUTER_TRIM,
+                        this.y + Sequencer.SQR_OUTER_TRIM,
                         this.width - (2 * Sequencer.SQR_OUTER_TRIM),
                         this.height - (2 * Sequencer.SQR_OUTER_TRIM)
                     );
@@ -366,8 +364,8 @@ function Sequencer(
                     {
                         ctx.fillStyle = 'rgb(0, 0, 0)';
                         ctx.fillRect(
-                            this.x + Sequencer.SQR_INNER_TRIM, 
-                            this.y + Sequencer.SQR_INNER_TRIM, 
+                            this.x + Sequencer.SQR_INNER_TRIM,
+                            this.y + Sequencer.SQR_INNER_TRIM,
                             this.width - (2 * Sequencer.SQR_INNER_TRIM),
                             this.height - (2 * Sequencer.SQR_INNER_TRIM)
                         );
@@ -380,13 +378,13 @@ function Sequencer(
 
             if (row < this.leadNotes.length)
             {
-                button.color = 'rgb(255, 0, 0);';
+                button.color = 'rgb(255,0,0)';
                 button.track = leadTrack;
                 button.note = leadNotes[this.leadNotes.length - 1 - row];
             }
             else
             {
-                button.color = 'rgb(255, 140, 0);';
+                button.color = 'rgb(255,140,0)';
                 button.track = drumTrack;
                 button.note = drumNotes[row - this.leadNotes.length];
             }
@@ -561,7 +559,7 @@ Render note output to the piece
 */
 Sequencer.prototype.render = function ()
 {
-    console.log('rendering sequencer grid');
+    console.log('Rendering sequencer grid');
 
     this.leadTrack.clear();
     this.drumTrack.clear();
