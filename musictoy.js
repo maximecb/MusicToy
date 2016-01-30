@@ -249,6 +249,31 @@ function initSynth(synthNet, piece)
             ctx.fillText('Clear', this.x + this.width / 2, this.y);
         }
     );
+    
+    // save button that doesn't do anything atm
+    sequencer.makeButton(
+        (canvas.width) - 200,
+        canvas.height - 30,
+        60,
+        25,
+        function click()
+        {
+            location.hash = '';
+            location.reload();
+        },
+        function draw(ctx)
+        {
+            ctx.textBaseline = 'top';
+            ctx.textAlign = 'center';
+            ctx.strokeStyle = 'rgb(255, 0, 0)';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(this.x, this.y, this.width, this.height);
+
+            ctx.fillStyle = 'red';
+            ctx.font = '14pt Arial';
+            ctx.fillText('Save', this.x + this.width / 2, this.y);
+        }
+    );
 
     // Canvas mouse down handler
     function canvasOnClick(event)
