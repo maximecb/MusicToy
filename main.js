@@ -111,15 +111,18 @@ function init()
         if (jsAudioNode !== undefined)
             stopAudio()
 
-        // Set the playback time on the piece to 0 (start)
-        piece.setTime(0);
+        audioCtx.resume().then(function ()
+        {
+            console.log('audio context resumed');
 
-        // Create a JS audio node and connect it to the destination
-        jsAudioNode = audioCtx.createScriptProcessor(bufferSize, 2, 2);
-        jsAudioNode.onaudioprocess = genAudio;
-	    jsAudioNode.connect(audioCtx.destination);
+            // Set the playback time on the piece to 0 (start)
+            piece.setTime(0);
 
-        //drawInterv = setInterval(drawTrack, 100);
+            // Create a JS audio node and connect it to the destination
+            jsAudioNode = audioCtx.createScriptProcessor(bufferSize, 2, 2);
+            jsAudioNode.onaudioprocess = genAudio;
+    	    jsAudioNode.connect(audioCtx.destination);
+        });
     }
 
     stopAudio = function ()
@@ -145,11 +148,11 @@ function init()
 
 // Attach the init function to the load event
 if (window.addEventListener)
-    window.addEventListener('load', init, false); 
+    window.addEventListener('load', init, false);
 else if (document.addEventListener)
-    document.addEventListener('load', init, false); 
+    document.addEventListener('load', init, false);
 else if (window.attachEvent)
-    window.attachEvent('onload', init); 
+    window.attachEvent('onload', init);
 
 // Default console logging function implementation
 if (!window.console) console = {};
@@ -164,4 +167,3 @@ if (!this.Float64Array)
     console.log('No Float64Array support');
     Float64Array = Array;
 }
-
