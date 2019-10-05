@@ -168,87 +168,42 @@ function initSynth(synthNet, piece)
 
     var drawInterv = undefined;
 
+    let playBtn = document.getElementById('play_btn');
+    let stopBtn = document.getElementById('stop_btn');
+    let eraseBtn = document.getElementById('erase_btn');
+
     // Play button
-    sequencer.makeButton(
-        (canvas.width / 2) - 60 - 20,
-        canvas.height - 30,
-        60,
-        25,
-        function click()
-        {
-            stopAudio();
+    playBtn.onclick = function ()
+    {
+        stopAudio();
 
-            if (drawInterv !== undefined)
-                clearInterval(drawInterv);
-            drawInterv = setInterval(redraw, 100);
+        if (drawInterv !== undefined)
+            clearInterval(drawInterv);
+        drawInterv = setInterval(redraw, 100);
 
-            playAudio();
-        },
-        function draw(ctx)
-        {
-            ctx.textBaseline = 'top';
-            ctx.textAlign = 'center';
-            ctx.strokeStyle = 'rgb(255, 255, 255)';
-            ctx.lineWidth = 2;
-            ctx.strokeRect(this.x, this.y, this.width, this.height);
-
-            ctx.fillStyle = 'white';
-            ctx.font = '14pt Arial';
-            ctx.fillText('Play', this.x + this.width / 2, this.y);
-        }
-    );
+        playAudio();
+    };
 
     // Stop button
-    sequencer.makeButton(
-        (canvas.width / 2) + 20,
-        canvas.height - 30,
-        60,
-        25,
-        function click()
-        {
-            stopAudio();
+    stopBtn.onclick = function ()
+    {
+        stopAudio();
 
-            if (drawInterv !== undefined)
-                clearInterval(drawInterv);
-        },
-        function draw(ctx)
-        {
-            ctx.textBaseline = 'top';
-            ctx.textAlign = 'center';
-            ctx.strokeStyle = 'rgb(255, 255, 255)';
-            ctx.lineWidth = 2;
-            ctx.strokeRect(this.x, this.y, this.width, this.height);
+        if (drawInterv !== undefined)
+            clearInterval(drawInterv);
+    };
 
-            ctx.fillStyle = 'white';
-            ctx.font = '14pt Arial';
-            ctx.fillText('Stop', this.x + this.width / 2, this.y);
-        }
-    );
+    // Erase button
+    eraseBtn.onclick = function ()
+    {
+        stopBtn.onclick();
 
-    // Clear button
-    sequencer.makeButton(
-        (canvas.width) - 80,
-        canvas.height - 30,
-        60,
-        25,
-        function click()
+        if (confirm('Are you sure?'))
         {
             location.hash = '';
             location.reload();
-        },
-        function draw(ctx)
-        {
-            ctx.textBaseline = 'top';
-            ctx.textAlign = 'center';
-            ctx.strokeStyle = 'rgb(255, 0, 0)';
-            ctx.lineWidth = 2;
-            ctx.strokeRect(this.x, this.y, this.width, this.height);
-
-            ctx.fillStyle = 'red';
-            ctx.font = '14pt Arial';
-            ctx.fillText('Clear', this.x + this.width / 2, this.y);
         }
-    );
+    };
 
     // Canvas mouse down handler
     function canvasOnClick(event)
@@ -579,13 +534,12 @@ Sequencer.prototype.render = function ()
         console.log(button.note.toString());
 
         this.piece.makeNote(
-            button.track, 
-            beatNo, 
-            button.note, 
+            button.track,
+            beatNo,
+            button.note,
             1 / Sequencer.SQRS_PER_BEAT
         );
     }
 
     location.hash = this.genHash();
 }
-

@@ -1,7 +1,6 @@
 body
 {
     background: #000000;
-
     color: white;
     font-family: "Arial", sans-serif;
     font-weight: normal;
@@ -29,61 +28,6 @@ div.title
     font-size: 30px;
 }
 
-div.faq_link
-{
-    margin-top: -5px;
-    margin-bottom: 12px;
-
-    text-align: center;
-    font-weight: bold;
-    font-size: 15px;
-}
-
-div.canvas_frame
-{
-    border: 2px solid rgb(255,255,255);
-
-    text-align: center;
-    vertical-align: middle;
-}
-
-div.text_frame
-{
-    border: 2px solid rgb(255,255,255);
-    padding-top: 3px;
-    padding-bottom: 3px;
-    padding-left: 5px;
-    padding-right: 5px;
-
-    vertical-align: text-top; 
-    text-align: left;
-    color: white;
-    font-family: "Courier", sans-serif;
-    font-weight: normal;
-    font-size: 15px;
-}
-
-div.faq_q
-{
-    margin-top: 12px;
-    margin-bottom: 10px;
-
-    text-align:left;
-    color: red;
-    font-family: "Arial", sans-serif;
-    font-weight: bold;
-    font-size: 20px;
-}
-
-div.ad
-{
-    width:100%;
-    margin-top: 12px; 
-    margin-bottom: 12px;
-
-    text-align:center; 
-}
-
 div.copyright
 {
     margin-top: 8px;
@@ -95,10 +39,3 @@ div.copyright
     font-weight: normal;
     font-size: 15px;
 }
-
-form
-{
-    color: white;
-    font-family: "Arial", sans-serif;
-}
-
