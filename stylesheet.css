@@ -19,7 +19,7 @@ a:hover {text-decoration: underline; }
 div.title
 {
     margin-top: 12px;
-    margin-bottom: 12px;
+    margin-bottom: 22px;
 
     text-align:center;
     color: white;
@@ -38,4 +38,9 @@ div.copyright
     font-family: "Arial", sans-serif;
     font-weight: normal;
     font-size: 15px;
+}
+
+.container{
+    display: grid;
+    place-items: center;
 }
