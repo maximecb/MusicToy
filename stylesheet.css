@@ -44,3 +44,18 @@ div.copyright
     display: grid;
     place-items: center;
 }
+
+
+.music-container{
+    display: grid;
+    grid-template-columns: auto auto ;
+    grid-gap: 10px;
+    padding: 10px;
+}
+
+.music-container> div {
+    background-color: rgba(8, 107, 19, 0.8);
+    text-align: center;
+    padding: 20px 0;
+    font-size: 15px;
+  }
