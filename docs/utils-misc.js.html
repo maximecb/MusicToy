@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: utils-misc.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: utils-misc.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*****************************************************************************
+*
+*  This file is part of the MusicToy project. The project is
+*  distributed at:
+*  https://github.com/maximecb/MusicToy
+*
+*  Copyright (c) 2012, Maxime Chevalier-Boisvert. All rights reserved.
+*
+*  This software is licensed under the following license (Modified BSD
+*  License):
+*
+*  Redistribution and use in source and binary forms, with or without
+*  modification, are permitted provided that the following conditions are
+*  met:
+*   1. Redistributions of source code must retain the above copyright
+*      notice, this list of conditions and the following disclaimer.
+*   2. Redistributions in binary form must reproduce the above copyright
+*      notice, this list of conditions and the following disclaimer in the
+*      documentation and/or other materials provided with the distribution.
+*   3. The name of the author may not be used to endorse or promote
+*      products derived from this software without specific prior written
+*      permission.
+*
+*  THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
+*  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+*  MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN
+*  NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+*  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+*  NOT LIMITED TO PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+*  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+*  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+*  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+*  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*
+*****************************************************************************/
+
+/**
+Assert that a condition holds true
+*/
+function assert(condition, errorText)
+{
+    if (!condition)
+    {
+        error(errorText);
+    }
+}
+
+/**
+Abort execution because a critical error occurred
+*/
+function error(errorText)
+{
+    alert('ERROR: ' + errorText);
+
+    throw errorText;
+}
+
+/**
+Test that a value is integer
+*/
+function isInt(val)
+{
+    return (
+        Math.floor(val) === val
+    );
+}
+
+/**
+Test that a value is a nonnegative integer
+*/
+function isNonNegInt(val)
+{
+    return (
+        isInt(val) &amp;&amp;
+        val >= 0
+    );
+}
+
+/**
+Test that a value is a strictly positive (nonzero) integer
+*/
+function isPosInt(val)
+{
+    return (
+        isInt(val) &amp;&amp;
+        val > 0
+    );
+}
+
+/**
+Get the current time in millisseconds
+*/
+function getTimeMillis()
+{
+    return (new Date()).getTime();
+}
+
+/**
+Get the current time in seconds
+*/
+function getTimeSecs()
+{
+    return (new Date()).getTime() / 1000;
+}
+
+/**
+Generate a random integer within [a, b]
+*/
+function randomInt(a, b)
+{
+    assert (
+        isInt(a) &amp;&amp; isInt(b) &amp;&amp; a &lt;= b,
+        'invalid params to randomInt'
+    );
+
+    var range = b - a;
+
+    var rnd = a + Math.floor(Math.random() * (range + 1));
+
+    return rnd;
+}
+
+/**
+Generate a random boolean
+*/
+function randomBool()
+{
+    return (randomInt(0, 1) === 1);
+}
+
+/**
+Generate a random floating-point number within [a, b]
+*/
+function randomFloat(a, b)
+{
+    if (a === undefined)
+        a = 0;
+    if (b === undefined)
+        b = 1;
+
+    assert (
+        a &lt;= b,
+        'invalid params to randomFloat'
+    );
+
+    var range = b - a;
+
+    var rnd = a + Math.random() * range;
+
+    return rnd;
+}
+
+/**
+Generate a random value from a normal distribution
+*/
+function randomNorm(mean, variance)
+{
+	// Declare variables for the points and radius
+    var x1, x2, w;
+
+    // Repeat until suitable points are found
+    do
+    {
+    	x1 = 2.0 * randomFloat() - 1.0;
+    	x2 = 2.0 * randomFloat() - 1.0;
+    	w = x1 * x1 + x2 * x2;
+    } while (w >= 1.0 || w == 0);
+
+    // compute the multiplier
+    w = Math.sqrt((-2.0 * Math.log(w)) / w);
+    
+    // compute the gaussian-distributed value
+    var gaussian = x1 * w;
+    
+    // Shift the gaussian value according to the mean and variance
+    return (gaussian * variance) + mean;
+}
+
+/**
+Choose a random argument value uniformly randomly
+*/
+function randomChoice()
+{
+    assert (
+        arguments.length > 0,
+        'must supply at least one possible choice'
+    );
+
+    var idx = randomInt(0, arguments.length - 1);
+
+    return arguments[idx];
+}
+
+/**
+Generate a weighed random choice function
+*/
+function genChoiceFn()
+{
+    assert (
+        arguments.length > 0 &amp;&amp; arguments.length % 2 === 0,
+        'invalid argument count: ' + arguments.length
+    );
+
+    var numChoices = arguments.length / 2;
+
+    var choices = [];
+    var weights = [];
+    var weightSum = 0;
+
+    for (var i = 0; i &lt; numChoices; ++i)
+    {
+        var choice = arguments[2*i];
+        var weight = arguments[2*i + 1];
+
+        choices.push(choice);
+        weights.push(weight);
+
+        weightSum += weight;
+    }
+
+    assert (
+        weightSum > 0,
+        'weight sum must be positive'
+    );
+
+    var limits = [];
+    var limitSum = 0;
+
+    for (var i = 0; i &lt; weights.length; ++i)
+    {
+        var normWeight = weights[i] / weightSum;
+
+        limitSum += normWeight;
+
+        limits[i] = limitSum;
+    }
+
+    function choiceFn()
+    {
+        var r = Math.random();
+
+        for (var i = 0; i &lt; numChoices; ++i)
+        {
+            if (r &lt; limits[i])
+                return choices[i];
+        }
+
+        return choices[numChoices-1];
+    }
+
+    return choiceFn;
+}
+
+/**
+Resample and normalize an array of data points
+*/
+function resample(data, numSamples, outLow, outHigh, inLow, inHigh)
+{
+    // Compute the number of data points per samples
+    var ptsPerSample = data.length / numSamples;
+
+    // Compute the number of samples
+    var numSamples = Math.floor(data.length / ptsPerSample);
+
+    // Allocate an array for the output samples
+    var samples = new Array(numSamples);
+
+    // Extract the samples
+    for (var i = 0; i &lt; numSamples; ++i)
+    {
+        samples[i] = 0;
+
+        var startI = Math.floor(i * ptsPerSample);
+        var endI = Math.min(Math.ceil((i+1) * ptsPerSample), data.length);
+        var numPts = endI - startI;
+
+        for (var j = startI; j &lt; endI; ++j)
+            samples[i] += data[j];
+
+        samples[i] /= numPts;
+    }    
+
+    // If the input range is not specified
+    if (inLow === undefined &amp;&amp; inHigh === undefined)
+    {
+        // Min and max sample values
+        var inLow = Infinity;
+        var inHigh = -Infinity;
+
+        // Compute the min and max sample values
+        for (var i = 0; i &lt; numSamples; ++i)
+        {
+            inLow = Math.min(inLow, samples[i]);
+            inHigh = Math.max(inHigh, samples[i]);
+        }
+    }
+
+    // Compute the input range
+    var iRange = (inHigh > inLow)? (inHigh - inLow):1;
+
+    // Compute the output range
+    var oRange = outHigh - outLow;
+
+    // Normalize the samples
+    samples.forEach(
+        function (v, i) 
+        {
+            var normVal = (v - inLow) / iRange;
+            samples[i] =  outLow + (normVal * oRange);
+        }
+    );
+
+    // Return the normalized samples
+    return samples;
+}
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#assert">assert</a></li><li><a href="global.html#error">error</a></li><li><a href="global.html#genChoiceFn">genChoiceFn</a></li><li><a href="global.html#getTimeMillis">getTimeMillis</a></li><li><a href="global.html#getTimeSecs">getTimeSecs</a></li><li><a href="global.html#isInt">isInt</a></li><li><a href="global.html#isNonNegInt">isNonNegInt</a></li><li><a href="global.html#isPosInt">isPosInt</a></li><li><a href="global.html#randomBool">randomBool</a></li><li><a href="global.html#randomChoice">randomChoice</a></li><li><a href="global.html#randomFloat">randomFloat</a></li><li><a href="global.html#randomInt">randomInt</a></li><li><a href="global.html#randomNorm">randomNorm</a></li><li><a href="global.html#resample">resample</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sat Feb 27 2021 06:59:31 GMT+0300 (GMT+03:00)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
