@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <title>MusicToy</title>
     <meta charset="utf-8" />
-    <meta name="keywords" content="music, grid, sequencer, synthesizer, samples, html5, javascript, google chrome">
+    <meta  name="keywords" content="music, grid, sequencer, synthesizer, samples, html5, javascript, google chrome" />
     <script language="javascript" src="main.js"></script>
     <script language="javascript" src="utils-misc.js"></script>
     <script language="javascript" src="utils-html.js"></script>
@@ -18,45 +18,48 @@
     <script language="javascript" src="piece.js"></script>
     <script language="javascript" src="musictoy.js"></script>
     <script language="javascript" src="sample-list.js"></script>
-    <link rel=stylesheet href="stylesheet.css" type="text/css">
-</head>
+    <link rel="stylesheet" href="stylesheet.css" type="text/css" />
+  </head>
 
-<body>
-
+  <body>
     <a href="https://github.com/maximecb/MusicToy">
-        <img style="position: absolute; top: 0; right: 0; border: 0;" src="images/forkme.png" alt="Fork me on GitHub">
+      <img
+        style="position: absolute; top: 0; right: 0; border: 0"
+        src="images/forkme.png"
+        alt="Fork me on GitHub"
+      />
     </a>
 
-    <div class="title">
-        MusicToy: Music Made Simple
-    </div>
+    <div class="title">MusicToy: Music Made Simple</div>
     <!-- 
 <div style="height:10px;"></div>
 we can use alternative <br>
 -->
     <div class="container">
-        <div class="music-board" >
+      <div class="music-board">
+        <canvas id="canvas" width="640" height="300">
+          Your browser does not support the canvas element.
+        </canvas>
 
-            <canvas id="canvas" width=640 height=300>
-            Your browser does not support the canvas element.
-          </canvas>
-
-            <div style="margin: 6px; background:gray" ;>
-                <button id="play_btn" type="button">Play</button>
-                <button id="stop_btn" type="button">Stop</button>
-                <button id="erase_btn" type="button">Erase</button>
-                <div style="height:10px;"></div>
-                <div style="margin-left:auto; margin-right:auto; text-align:justify; width:650px;">
-                    MusicToy is a minimalist grid sequencer designed to make composition simple and encourage experimentation.
-                </div>
-            </div>
-
+        <div class="music-container">
+          <div class="play">
+            <p>Play area</p>
+            <button id="play_btn" type="button">Play</button>
+            <button id="stop_btn" type="button">Stop</button>
+            <button id="erase_btn" type="button">Erase</button>
+          </div>
+          <div class="record">
+            <p>Record Area</p>
+            <button type="button">Record</button>
+            <button type="button">Stop Record</button>
+          </div>
         </div>
+        <div style=" margin-left: auto; margin-right: auto; text-align: justify;  width: 650px;" >
+          MusicToy is a minimalist grid sequencer designed to make composition
+          simple and encourage experimentation.
+        </div>
+      </div>
     </div>
-    <div class="copyright">
-        Copyright &copy; 2012 Maxime Chevalier-Boisvert
-    </div>
-
-</body>
-
+    <div class="copyright">Copyright &copy; 2012 Maxime Chevalier-Boisvert</div>
+  </body>
 </html>
